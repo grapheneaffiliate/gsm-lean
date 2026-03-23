@@ -6,6 +6,7 @@
 
 -- Foundation
 import GSMLean.QSqrt5
+import GSMLean.QSqrt2Sqrt5
 import GSMLean.GoldenRatio
 import GSMLean.E8Constants
 

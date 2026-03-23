@@ -34,6 +34,7 @@ QSqrt5.lean (Q(√5) field arithmetic)
 | File | Constants | Theorems | Status |
 |------|-----------|----------|--------|
 | QSqrt5.lean | Q(√5) field | DecidableEq | Done |
+| QSqrt2Sqrt5.lean | Q(√2,√5) field | DecidableEq (4 components) | Done |
 | GoldenRatio.lean | φ identities | 10 theorems | Done |
 | E8Constants.lean | Structure constants | 5 theorems | Done |
 | E8Data.lean | 240 root vectors | count=240, all norms=2 | Done |
@@ -55,11 +56,11 @@ QSqrt5.lean (Q(√5) field arithmetic)
 | Predictions.lean | Δm² ratio, r, m_π/m_e | 3 theorems | Done |
 | Hierarchy.lean | Hierarchy exponent | 2 theorems | Done |
 
-**Total: 21 Lean files, 810 build jobs, 0 sorry, 0 errors.**
+**Total: 22 Lean files, 2197 build jobs, 0 sorry, 0 errors.**
 
-## Notes on limitations
+## Extended field and real analysis
 
-- **V_cb** involves √2 (not in Q(√5)) — omitted from CKMMatrix.lean
-- **M_Pl/v = φ^(80-ε)** has non-integer exponent — not in Q(√5), verified structurally only
-- **m_p/m_e = 6π⁵(...)** involves π — correction factor verified, full product requires real analysis
-- **PMNS angles** involve arctan/arcsin — Q(√5) arguments verified, transcendental evaluation not formalized
+- **V_cb** verified in Q(√2, √5) via `QSqrt2Sqrt5.lean` — the biquadratic field with DecidableEq on 4 rational components
+- **M_Pl/v = φ^(80-ε)** defined using `Real.rpow` — exponent derivation and φ⁸⁰ verified exactly, torsion correction via real analysis
+- **m_p/m_e = 6π⁵(...)** uses Mathlib's `Real.pi` — φ-correction verified in Q(√5), full product defined noncomputably with Mathlib π bounds (20 decimal places)
+- **PMNS angles** defined using Mathlib's `Real.arctan`/`Real.arcsin` — arguments verified in Q(√5), `tan(θ₁₂) = arg` proved via `Real.tan_arctan`

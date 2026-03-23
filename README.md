@@ -408,6 +408,7 @@ GSMLean/
 │
 ├── GSMLean/
 │   ├── QSqrt5.lean            # Q(√5) field: structure, arithmetic, DecidableEq
+│   ├── QSqrt2Sqrt5.lean       # Q(√2,√5) biquadratic field (for V_cb)
 │   ├── GoldenRatio.lean       # φ identities: φ²=φ+1, powers, Lucas numbers
 │   ├── E8Constants.lean       # E₈ data: 248, 240, 28, Casimirs, anchor=137
 │   ├── E8Data.lean            # 240 root vectors (Type D₈ + half-integer), norm verification
@@ -698,13 +699,14 @@ If the derivation uses transcendental functions (π, arcsin, etc.), mark the the
 
 ## Completion Status
 
-**All planned work is complete.** 21 Lean files, 810 build jobs, zero `sorry`, zero errors.
+**All planned work is complete.** 22 Lean files, 2197 build jobs, zero `sorry`, zero errors.
 
 ### All Verified Files
 
 | File | Constants | Theorems | Status |
 |------|-----------|----------|--------|
 | QSqrt5.lean | Q(√5) field arithmetic | DecidableEq derived | Done |
+| QSqrt2Sqrt5.lean | Q(√2,√5) biquadratic field | DecidableEq (4 components) | Done |
 | GoldenRatio.lean | φ², φ·φ⁻¹=1, 5 powers, Lucas | 10 theorems | Done |
 | E8Constants.lean | dim=248, rank=8, roots=240, Casimirs, ε | 5 theorems | Done |
 | E8Data.lean | 240 root vectors (112 + 128) | count=240, all norms=2 | Done |
@@ -715,27 +717,27 @@ If the derivation uses transcendental functions (π, arcsin, etc.), mark the the
 | Electroweak.lean | y_t, m_H/v, m_W/v, m_t/v, m_Z/v | 5 theorems | Done |
 | LeptonMasses.lean | m_μ/m_e, m_τ/m_μ | 1 theorem | Done |
 | QuarkMasses.lean | m_s/m_d=20, m_c/m_s, m_b/m_c | 2 theorems | Done |
-| CKMMatrix.lean | sin θ_C, J_CKM, V_ub | 3 theorems | Done |
-| PMNSMatrix.lean | θ₁₂, θ₂₃, θ₁₃, δ_CP arguments | 4 theorems | Done |
+| CKMMatrix.lean | sin θ_C, J_CKM, V_ub, **V_cb** | 5 theorems (V_cb in Q(√2,√5)) | Done |
+| PMNSMatrix.lean | θ₁₂, θ₂₃, θ₁₃, δ_CP | 4 args + Real.arctan/arcsin defs | Done |
 | NeutrinoMass.lean | Σm_ν φ-factor | 1 theorem | Done |
 | Cosmology.lean | n_s, z_CMB, Ω_Λ | 1 theorem | Done |
 | ExtendedConstants.lean | Ω_b, N_eff, Ω_DM, T_CMB, (mn-mp)/me, η_B | 5 theorems | Done |
 | CompositeQCD.lean | B_d/m_p, σ₈ | 2 theorems | Done |
-| ProtonMass.lean | m_p/m_e correction factor | (π needed for full) | Done |
+| ProtonMass.lean | m_p/m_e | correction exact + Real.pi product | Done |
 | BellBound.lean | S_CHSH = 4-φ | 3 theorems | Done |
 | Predictions.lean | Δm² ratio, r, m_π/m_e | 3 theorems | Done |
-| Hierarchy.lean | Hierarchy exponent 80=2(30+8+2) | 2 theorems | Done |
+| Hierarchy.lean | M_Pl/v | exponent + φ⁸⁰ exact + Real.rpow | Done |
 
-### Known Limitations
+### Extended Field and Real Analysis
 
-These are inherent mathematical boundaries, not incomplete work:
+Items that go beyond Q(√5) are handled with extended algebraic fields and Mathlib's real analysis:
 
-| Item | Reason | What IS verified |
-|------|--------|-----------------|
-| V_cb | Involves √2, not in Q(√5) | Other CKM elements verified |
-| M_Pl/v = φ^(80-ε) | Non-integer exponent, not in Q(√5) | Exponent derivation verified |
-| m_p/m_e = 6π⁵(...) | Involves π (transcendental) | φ-correction factor verified |
-| PMNS angles | Involve arctan/arcsin | Q(√5) arguments verified |
+| Item | Technique | Status |
+|------|-----------|--------|
+| V_cb (involves √2) | Q(√2,√5) — biquadratic field with 4-component DecidableEq | `native_decide` verified |
+| M_Pl/v = φ^(80-ε) | `Real.rpow` — exponent derivation + φ⁸⁰ exact, ratio noncomputable | Defined with Mathlib |
+| m_p/m_e = 6π⁵(...) | `Real.pi` bounds (20 decimal places) — correction factor exact in Q(√5) | Defined with Mathlib |
+| PMNS angles | `Real.arctan`/`Real.arcsin` — `tan(θ₁₂) = arg` proved via `tan_arctan` | Proved with Mathlib |
 
 ---
 
