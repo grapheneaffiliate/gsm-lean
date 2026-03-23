@@ -392,7 +392,7 @@ z_CMB   = φ¹⁴ + 246                                   = 1089.0   (exp: 1089.
 
 ### All 58 Constants
 
-The complete list of 58 GSM constants, including CKM and PMNS mixing matrices, neutrino masses, and predictions, is documented in the companion repository [e8-phi-constants/FORMULAS.md](https://github.com/grapheneaffiliate/e8-phi-constants/blob/main/FORMULAS.md). Constants requiring transcendental functions (π, arcsin, arctan) cannot be verified by `native_decide` and are marked as TODO in the roadmap.
+The complete list of 58 GSM constants, including CKM and PMNS mixing matrices, neutrino masses, and predictions, is documented in the companion repository [e8-phi-constants/FORMULAS.md](https://github.com/grapheneaffiliate/e8-phi-constants/blob/main/FORMULAS.md). Constants involving transcendental functions (π, arcsin, arctan) are handled using Mathlib's `Real.pi`, `Real.arctan`, and `Real.arcsin` — their Q(√5) arguments are verified by `native_decide`, and the full real-valued definitions use Mathlib's analysis library.
 
 ---
 
@@ -693,7 +693,7 @@ To add a new GSM constant:
 
 7. **Build:** `lake build`
 
-If the derivation uses transcendental functions (π, arcsin, etc.), mark the theorem with `sorry` and note it in `DERIVATION_DAG.md`.
+If the derivation uses transcendental functions (π, arcsin, etc.), verify the Q(√5) arguments with `native_decide` and define the full real-valued result using Mathlib's `Real.pi`, `Real.arctan`, or `Real.arcsin`.
 
 ---
 
