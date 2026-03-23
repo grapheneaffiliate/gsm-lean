@@ -1,0 +1,2 @@
+-- Placeholder, kept for compatibility with lakefile template.
+-- All substantive content is in the other modules.
