@@ -1,5 +1,5 @@
 /-
-  GaloisConjugation.lean — The Galois Conjugation Theorem for E₈ → H₄
+  GaloisConjugation.lean — The Galois Conjugation Theorem for E₈ -> H₄
 
   THEOREM: For every E₈ root v, the squared norms of its projections
   onto the H₄ and H₄' subspaces are Galois conjugates in Q(√5):
@@ -23,13 +23,13 @@ open QSqrt5
 
 /-! ### Conjugate projection: H₄' = σ(H₄) -/
 
-/-- The conjugate projection matrix: apply Galois conjugation σ(√5 → -√5)
+/-- The conjugate projection matrix: apply Galois conjugation σ(√5 -> -√5)
     to each entry of the Elser-Sloane matrix. -/
-def projMatrixConj : Fin 4 → Fin 8 → QSqrt5 :=
+def projMatrixConj : Fin 4 -> Fin 8 -> QSqrt5 :=
   fun i j => QSqrt5.conj (projMatrix i j)
 
 /-- Project to H₄' (conjugate subspace) -/
-def projectConj (v : Fin 8 → ℚ) : Fin 4 → QSqrt5 :=
+def projectConj (v : Fin 8 -> ℚ) : Fin 4 -> QSqrt5 :=
   fun i =>
     projMatrixConj i 0 * QSqrt5.ofRat (v 0) + projMatrixConj i 1 * QSqrt5.ofRat (v 1) +
     projMatrixConj i 2 * QSqrt5.ofRat (v 2) + projMatrixConj i 3 * QSqrt5.ofRat (v 3) +
@@ -37,7 +37,7 @@ def projectConj (v : Fin 8 → ℚ) : Fin 4 → QSqrt5 :=
     projMatrixConj i 6 * QSqrt5.ofRat (v 6) + projMatrixConj i 7 * QSqrt5.ofRat (v 7)
 
 /-- projectConj(v) = conj(project(v)) component-wise -/
-theorem projectConj_eq_conj (v : Fin 8 → ℚ) (i : Fin 4) :
+theorem projectConj_eq_conj (v : Fin 8 -> ℚ) (i : Fin 4) :
     projectConj v i = QSqrt5.conj (project v i) := by
   simp [projectConj, project, projMatrixConj]
   -- This follows from conj being a ring homomorphism:
@@ -48,14 +48,14 @@ theorem projectConj_eq_conj (v : Fin 8 → ℚ) (i : Fin 4) :
 /-! ### Squared norm in Q(√5) -/
 
 /-- Squared norm of a 4D Q(√5) vector: ‖w‖² = Σᵢ wᵢ² -/
-def normSq4 (w : Fin 4 → QSqrt5) : QSqrt5 :=
+def normSq4 (w : Fin 4 -> QSqrt5) : QSqrt5 :=
   w 0 * w 0 + w 1 * w 1 + w 2 * w 2 + w 3 * w 3
 
 /-- H₄ squared norm of an E₈ root -/
-def h4NormSq (v : Fin 8 → ℚ) : QSqrt5 := normSq4 (project v)
+def h4NormSq (v : Fin 8 -> ℚ) : QSqrt5 := normSq4 (project v)
 
 /-- H₄' squared norm of an E₈ root -/
-def h4BarNormSq (v : Fin 8 → ℚ) : QSqrt5 := normSq4 (projectConj v)
+def h4BarNormSq (v : Fin 8 -> ℚ) : QSqrt5 := normSq4 (projectConj v)
 
 /-! ### The Galois Conjugation Theorem -/
 
@@ -136,3 +136,12 @@ theorem orbit_sizes_correct :
 #eval s!"Galois conjugation holds for all roots: {allRootsGaloisConj}"
 #eval s!"Distinct H4 norms: {distinctH4Norms.length}"
 #eval s!"Orbit sizes: {orbitSizes}"
+
+/-! ### Cross-reference
+  The computational discovery that led to this theorem is in:
+  github.com/grapheneaffiliate/h4-polytopic-attention
+  Files:
+  - experiments/e8_h4_exploration.py (initial discovery)
+  - experiments/e8_theta_h4_decomposition.py (theta series decomposition)
+  - experiments/e8_mixing_term.py (mixing term analysis -> found it's zero)
+-/
